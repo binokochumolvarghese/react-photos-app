@@ -3,16 +3,13 @@ import { PhotoContext } from "../../store/PhotoContext";
 
 const SearchPhotos = () => {
   const [query, setQuery] = useState("");
-  const { searchPhotos, photoDispatch } = useContext(PhotoContext);
+  const { state, searchPhotos, photoDispatch } = useContext(PhotoContext);
+  const { loading } = state;
 
   const handleSearch = (e) => {
     e.preventDefault();
     if (query.trim()) {
-      photoDispatch({
-        type: "SEARCH_PHOTOS_REQUEST",
-        payload: { searchQuery: query },
-      });
-
+      photoDispatch({ type: "SEARCH_PHOTOS_REQUEST", payload: { searchQuery: query }, });
       searchPhotos(query);
     }
   };
@@ -31,7 +28,7 @@ const SearchPhotos = () => {
         </div>
         <div className="">
           <button className="w-full border rounded p-2 bg-slate-200 shadow-sm">
-            Search
+             {loading ? "Searching..." : "Search"}
           </button>
         </div>
       </div>

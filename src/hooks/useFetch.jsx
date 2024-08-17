@@ -2,7 +2,7 @@
 
 const useFetch = () => {
 
-    // Function to call any api
+    // Function to call API
     const sendRequest = async (requestConfig) => {
         try {
             const apiResponse = await fetch(requestConfig.url, {
@@ -14,7 +14,7 @@ const useFetch = () => {
             if (!apiResponse.ok){
                 return{
                     data: null,
-                    error: `An error has occured: ${apiResponse.status}`
+                    error: `API fetching has either hit the limit or encountered an error. The status code is ${apiResponse.status}`
                 }
             } else {
                 const photoData = await apiResponse.json();
@@ -38,3 +38,5 @@ const useFetch = () => {
 }
 
 export default useFetch;
+
+ 

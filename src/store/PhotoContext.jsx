@@ -19,7 +19,7 @@ const intialState = {
 const photosReducer = (state, action) => {
   switch (action.type) {
     case "FETCH_PHOTOS_REQUEST":
-      return { ...state, loading: true, error: null, photos: [] };
+      return { ...state, loading: true, error: null, photos: [], pageNumber: 1 };
 
     case "FETCH_PHOTOS_SUCCESS":
       const updatedPhotos = state.photos
@@ -42,6 +42,7 @@ const photosReducer = (state, action) => {
         error: null,
         photos: [],
         searchQuery: action.payload.searchQuery,
+        searchPageNumber: 1,
       };
 
     case "SEARCH_PHOTOS_SUCCESS":
@@ -75,11 +76,15 @@ const PhotoContextProvider = ({ children }) => {
   const apiUrl = UNSPLASH_API_URL;
   const { sendRequest } = useFetch();
 
-  const fetchPhotos = async () => {
+  const fetchPhotos = async () => { 
+    
+
     try {
       const { data, error } = await sendRequest({
         url: `${apiUrl}/photos/?page=${photoState.pageNumber}&client_id=${apiKey}`,
       });
+
+      console.log(`${apiUrl}/photos/?page=${photoState.pageNumber}&client_id=${apiKey}`)
 
       if (error != null) {
         photoDispatch({ type: "PHOTOS_FAILURE", payload: error });
@@ -93,6 +98,7 @@ const PhotoContextProvider = ({ children }) => {
   };
 
   const searchPhotos = async (query) => {
+   
     try {
       const { data, error } = await sendRequest({
         url: `${apiUrl}/search/photos?page=${photoState.searchPageNumber}&query=${query}&client_id=${apiKey}`,

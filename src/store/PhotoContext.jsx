@@ -13,6 +13,8 @@ const intialState = {
   pageNumber: 1,
   searchPageNumber: 1,
   searchQuery: "",
+  selectedPhotoId : "",
+  selectedPhoto: {}
 };
 
 // Reducer function
@@ -62,6 +64,19 @@ const photosReducer = (state, action) => {
 
     case "PHOTOS_FAILURE":
       return { ...state, loading: false, error: action.payload };
+
+    case "VIEW_SELECTED_PHOTO_REQUEST":
+      return {
+        ...state,
+        selectedPhotoId: action.payload.selectedPhotoId
+      };
+
+    case "VIEW_SELECTED_PHOTO_SUCCESS":
+      return {
+        ...state,
+        selectedPhotoId: action.payload.selectedPhotoId,
+        selectedPhoto: action.payload.data
+      };
 
     default:
       return state;
@@ -118,10 +133,32 @@ const PhotoContextProvider = ({ children }) => {
     }
   };
 
+  const viewPhoto = async (selectedPhotoId) => { 
+    try {
+      const { data, error } = await sendRequest({
+        url: `${apiUrl}/photos/${selectedPhotoId}?client_id=${apiKey}`,
+      });
+
+      if (error != null) {
+        photoDispatch({ type: "PHOTOS_FAILURE", payload: error });
+      } else {
+        photoDispatch({
+          type: "VIEW_SELECTED_PHOTO_SUCCESS",
+          payload: { data: data, selectedPhotoId },
+        });
+      }
+    }
+      catch (error) {
+        console.log(error);
+        photoDispatch({ type: "PHOTOS_FAILURE", payload: error });
+      }
+    };
+
   const cntxValue = {
     state: photoState,
     fetchPhotos,
     searchPhotos,
+    viewPhoto,
     photoDispatch,
   };
 

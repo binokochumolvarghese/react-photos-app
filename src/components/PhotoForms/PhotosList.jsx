@@ -60,7 +60,9 @@ const PhotosList = () => {
 
   const handleEscape = (event) => {
     if (event.key === "Escape") {
+      photoDispatch({  type: "VIEW_SELECTED_PHOTO_REQUEST" });
       modal.current.close();
+      
     }
   };
 

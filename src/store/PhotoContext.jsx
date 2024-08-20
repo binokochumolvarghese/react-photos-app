@@ -65,9 +65,17 @@ const photosReducer = (state, action) => {
     case "PHOTOS_FAILURE":
       return { ...state, loading: false, error: action.payload };
 
+    case "VIEW_SELECTED_PHOTO_MODAL":
+      return {
+        ...state,
+        selectedPhoto: {},
+        selectedPhotoId: ""
+      };
+
     case "VIEW_SELECTED_PHOTO_REQUEST":
       return {
         ...state,
+        selectedPhoto: {},
         selectedPhotoId: action.payload.selectedPhotoId
       };
 
@@ -135,9 +143,13 @@ const PhotoContextProvider = ({ children }) => {
 
   const viewPhoto = async (selectedPhotoId) => { 
     try {
+      photoDispatch({
+        type: "VIEW_SELECTED_PHOTO_MODAL"
+      });
+
       const { data, error } = await sendRequest({
         url: `${apiUrl}/photos/${selectedPhotoId}?client_id=${apiKey}`,
-      });
+      }); 
 
       if (error != null) {
         photoDispatch({ type: "PHOTOS_FAILURE", payload: error });

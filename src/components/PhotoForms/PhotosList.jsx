@@ -16,11 +16,6 @@ const PhotosList = () => {
     photoDispatch({ type: "FETCH_PHOTOS_REQUEST" });
     fetchPhotos();
 
-    // Add eventlistener for Esacpe key
-    if (modal.current.open()) {
-      document.addEventListener("keydown", handleEscape);
-    }
-
     return () => {
       if (observer.current) observer.current.disconnect();
       document.removeEventListener("keydown", handleEscape);

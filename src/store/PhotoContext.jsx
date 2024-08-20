@@ -107,8 +107,6 @@ const PhotoContextProvider = ({ children }) => {
         url: `${apiUrl}/photos/?page=${photoState.pageNumber}&client_id=${apiKey}`,
       });
 
-      console.log(`${apiUrl}/photos/?page=${photoState.pageNumber}&client_id=${apiKey}`)
-
       if (error != null) {
         photoDispatch({ type: "PHOTOS_FAILURE", payload: error });
       } else {

@@ -22,13 +22,7 @@ const Modal = forwardRef(function fnModal(
     },
     []
   );
-
-  // Function to handle the escape key press
-  const handleEscape = (event) => {
-    if (event.key === "Escape") {
-      close(); //
-    }
-  };
+  
 
   return createPortal(
     <dialog

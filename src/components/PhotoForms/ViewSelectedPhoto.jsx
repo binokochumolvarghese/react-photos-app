@@ -2,13 +2,13 @@ import React, { useContext, useEffect } from "react";
 import { PhotoContext } from "../../store/PhotoContext";
 
 const ViewSelectedPhoto = () => {
-  const { state, photoDispatch } = useContext(PhotoContext);
+  const { state } = useContext(PhotoContext);
   const { selectedPhoto } = state;
 
   return (
     <>
-      <div className="min-h-80 p-4">
-        {Object.keys(selectedPhoto).length != 0 ? (
+      {Object.keys(selectedPhoto).length != 0 ? (
+        <div className="min-h-80 p-4">
           <>
             <div className="items-center justify-center">
               <div className="flex  justify-start pb-2">
@@ -63,10 +63,10 @@ const ViewSelectedPhoto = () => {
               )}
             </div>
           </>
-        ) : (
-          ""
-        )}
-      </div>
+        </div>
+      ) : (
+        ""
+      )}
     </>
   );
 };

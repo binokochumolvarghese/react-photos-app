@@ -1,5 +1,4 @@
 ### Photos App
-
 An application that fetches photos from the Unsplash API, allowing users to browse and search images, and click on any photo to view detailed information in a popup.
 
 #### Link
